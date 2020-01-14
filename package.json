@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0",
+    "@hapi/joi": "^17.0.0",
+    "mysql2": "^2.1.0"
+  }
+}

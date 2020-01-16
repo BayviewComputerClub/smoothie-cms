@@ -1,6 +1,7 @@
 const db = require("./pool");
 const server = require("./server");
 const Page = require("./classes/page");
+const Nav = require("./classes/nav");
 const PageResponse = require("./classes/page_response");
 
 async function main() {
@@ -35,7 +36,14 @@ async function main() {
         method: 'GET',
         path: '/pages/{page}',
         handler: async (request, h) => {
-            return await new Page().get.bySlug(request.params.page)
+            return await new Page().get.bySlug.raw(request.params.page);
+        }
+    });
+    server.route({
+        method: 'GET',
+        path: '/pages/rendered/{page}',
+        handler: async (request, h) => {
+            return await new Page().get.bySlug.rendered(request.params.page, request.payload);
         }
     });
 
@@ -44,11 +52,7 @@ async function main() {
         method: 'GET',
         path: '/navs/{parent}',
         handler: async (request, h) => {
-            const [rows, fields] = await db.execute("SELECT * FROM pages WHERE display_on_nav=? AND parent=?", [true, request.params.parent]);
-            if(rows.length === 0) {
-                return {status: false, pages: rows, error: "404 - nav items not found"};
-            }
-            return {status: true, pages: rows};
+            return new Nav().get.byParent(request.params.parent);
         }
     });
 

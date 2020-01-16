@@ -13,6 +13,8 @@ POST "/pages" - Accepts a JSON Page object in the body, and creates that page. R
 
 GET "/pages/{slug}" - Returns a PageResponse with a single page (by slug).
 
+GET "/pages/rendered/{slug}" - Returns a PageResponse with a single page, that is rendered with EJS and Markdown support. A JSON object in the request body will be passed to EJS.
+
 GET "/navs/{parent}" - Returns a PageResponse with all pages with the specified parent, and has "display_on_nav" set to to true.
 
 ### PageResponse

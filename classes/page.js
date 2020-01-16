@@ -1,6 +1,11 @@
 const db = require("../pool");
 const pageSchema = require("../schemas/page_schema");
 const PageResponse = require("./page_response");
+const marked = require("marked");
+const ejs = require('ejs');
+const LRU = require('lru-cache');
+
+ejs.cache = new LRU(100);
 
 class Page {
     get = {
@@ -8,12 +13,30 @@ class Page {
             const [rows, fields] = await db.query("SELECT * FROM pages");
             return new PageResponse(true, "", rows);
         },
-        bySlug: async (slug) => {
-            const [rows, fields] = await db.execute("SELECT * FROM pages WHERE slug=?", [slug]);
-            if(rows.length <= 0) {
-              return new PageResponse(false, "404 - slug not found", []);
+        bySlug: {
+            raw: async (slug) => {
+                const [rows, fields] = await db.execute("SELECT * FROM pages WHERE slug=?", [slug]);
+                if(rows.length <= 0) {
+                    return new PageResponse(false, "404 - slug not found", []);
+                }
+                return new PageResponse(true, "", rows);
+            },
+            rendered: async (slug, ejsObj) => {
+                const [rows, fields] = await db.execute("SELECT * FROM pages WHERE slug=?", [slug]);
+                if(rows.length <= 0) {
+                    return new PageResponse(false, "404 - slug not found", []);
+                }
+
+                let ejsOptions = {
+                    async: true
+                };
+
+                // Render the EJS followed by Markdown.
+                rows[0].content = await ejs.render(rows[0].content, ejsObj, ejsOptions);
+                rows[0].content = await marked(rows[0].content);
+
+                return new PageResponse(true, "", rows);
             }
-            return new PageResponse(true, "", rows);
         }
     };
 

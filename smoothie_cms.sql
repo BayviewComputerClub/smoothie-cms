@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 14, 2020 at 02:50 PM
+-- Generation Time: Jan 17, 2020 at 02:05 PM
 -- Server version: 8.0.1-dmr
 -- PHP Version: 7.2.23
 
@@ -45,9 +45,8 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `slug`, `date`, `display_on_nav`, `parent`, `nav_title`, `title`, `meta`, `content`) VALUES
-(1, 'hello-world', '2020-01-07', 1, 0, 'Hello World', 'Hello World Page', 'This is a test page.', '<em>This is some coool content.</em>'),
-(2, 'devin-sucks', '2020-01-07', 1, 0, 'no u', 'Nope', 'This is a test page.', '<marquee>Espidev is a ESPIDEV!!!!</marquee>\r\nThis message was brought to you by the Penguin gang.'),
-(3, 'test-page', '2020-01-13', 1, 0, 'Test Page', 'Test Page', 'This page was placed using a POST', 'This page was placed using a POST.  This is some coool content...');
+(3, 'test-page', '2020-01-13', 0, 0, 'Test Page', 'Test Page', 'This page was placed using a POST', '# This page was placed using a POST.  This is some coool content...\r\n\r\n<%= 1+1 %>'),
+(8, 'home', '2020-01-17', 0, 0, 'Home', 'BayviewJudge', 'BayviewJudge - Home Page', 'Welcome to BayviewJudge!');
 
 --
 -- Indexes for dumped tables
@@ -57,7 +56,8 @@ INSERT INTO `pages` (`id`, `slug`, `date`, `display_on_nav`, `parent`, `nav_titl
 -- Indexes for table `pages`
 --
 ALTER TABLE `pages`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -67,7 +67,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -26,8 +26,14 @@ async function main() {
         method: 'POST',
         path: '/pages',
         handler: async (request, h) => {
-            let page = new Page();
-            return await page.create(request.payload);
+            return await new Page().create(request.payload);
+        }
+    });
+    server.route({
+        method: 'PUT',
+        path: '/pages',
+        handler: async (request, h) => {
+            return await new Page().update(request.payload.originalSlug, request.payload.page);
         }
     });
 

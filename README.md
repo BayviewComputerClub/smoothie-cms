@@ -11,6 +11,8 @@ GET "/pages" - Returns a PageResponse with all pages.
 
 POST "/pages" - Accepts a JSON Page object in the body, and creates that page. Returns an empty PageResponse.
 
+PUT "/pages" - Accepts a JSON PageUpdateRequest object, which consists of an updated Page object, and the slug to be updated.
+
 GET "/pages/{slug}" - Returns a PageResponse with a single page (by slug).
 
 GET "/pages/rendered/{slug}" - Returns a PageResponse with a single page, that is rendered with EJS and Markdown support. A JSON object in the request body will be passed to EJS.

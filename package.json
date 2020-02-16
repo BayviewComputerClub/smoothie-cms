@@ -6,5 +6,16 @@
     "lru-cache": "^5.1.1",
     "marked": "^0.8.0",
     "mysql2": "^2.1.0"
+  },
+  "name": "smoothie-cms",
+  "version": "1.0.0",
+  "description": "Content server for smoothie-web",
+  "main": "index.js",
+  "repository": "https://github.com/BayviewComputerClub/smoothie-cms.git",
+  "author": "Seshan Ravikumar <seshan10@me.com>",
+  "license": "AGPL-3.0",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
   }
 }

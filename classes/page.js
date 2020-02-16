@@ -60,13 +60,48 @@ class Page {
             } catch (e) {
                 return new PageResponse(false, e.message, []);
             }
-
             if(result[0].affectedRows >= 1) {
                 return new PageResponse(true, "", []);
             } else {
                 return new PageResponse(false, "MySQL - no rows affected", []);
             }
 
+        }
+    }
+
+    async update(pageSlug, newPage) {
+        let validatedResult = pageSchema.validate(newPage);
+        if (typeof(validatedResult.error) !== "undefined") {
+            // If the error property exists, fail.
+            return new PageResponse(false, validatedResult.error.details[0].message, []);
+        } else {
+            let page = validatedResult.value;
+
+            let result;
+            try {
+                result = await db.execute(
+                    `UPDATE pages SET 
+                    
+                    slug = ?, 
+                    date = ?, 
+                    display_on_nav = ?, 
+                    parent = ?, 
+                    nav_title = ?, 
+                    title = ?, 
+                    meta = ?, 
+                    content = ?
+                    
+                    WHERE slug = ?`,
+                    [page.slug, page.date, page.display_on_nav, page.parent, page.nav_title, page.title, page.meta, page.content, pageSlug]
+                );
+            } catch (e) {
+                return new PageResponse(false, e.message, []);
+            }
+            if (result[0].affectedRows >= 1) {
+                return new PageResponse(true, "", []);
+            } else {
+                return new PageResponse(false, "MySQL - no rows affected", []);
+            }
         }
     }
 }

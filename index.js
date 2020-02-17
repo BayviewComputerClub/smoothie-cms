@@ -33,7 +33,8 @@ async function main() {
         method: 'PUT',
         path: '/pages',
         handler: async (request, h) => {
-            return await new Page().update(request.payload.originalSlug, request.payload.page);
+            console.log(request.payload);
+            return await new Page().update(request.payload.slug, request.payload.page);
         }
     });
 

@@ -70,9 +70,11 @@ class Page {
     }
 
     async update(pageSlug, newPage) {
+        delete newPage.id;
         let validatedResult = pageSchema.validate(newPage);
         if (typeof(validatedResult.error) !== "undefined") {
             // If the error property exists, fail.
+            console.log(validatedResult.error);
             return new PageResponse(false, validatedResult.error.details[0].message, []);
         } else {
             let page = validatedResult.value;
@@ -81,7 +83,7 @@ class Page {
             try {
                 result = await db.execute(
                     `UPDATE pages SET 
-                    
+                   
                     slug = ?, 
                     date = ?, 
                     display_on_nav = ?, 
@@ -95,6 +97,7 @@ class Page {
                     [page.slug, page.date, page.display_on_nav, page.parent, page.nav_title, page.title, page.meta, page.content, pageSlug]
                 );
             } catch (e) {
+                console.log(e);
                 return new PageResponse(false, e.message, []);
             }
             if (result[0].affectedRows >= 1) {

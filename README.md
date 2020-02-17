@@ -2,8 +2,15 @@
 
 Content (Pages, Posts, Comments, etc) Server for smoothie-web
 
-Requires NodeJS v12.
+Requires NodeJS v12, there is a Dockerfile provided.
 
+Don't forget to set these environment variables
+```dotenv
+MYSQL_HOST
+MYSQL_USER
+MYSQL_PASS
+MYSQL_DB
+```
 
 ## API
 

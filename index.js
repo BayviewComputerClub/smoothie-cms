@@ -4,8 +4,7 @@ const Page = require("./classes/page");
 const Nav = require("./classes/nav");
 const PageResponse = require("./classes/page_response");
 
-async function main() {
-    // Initialize Routes:
+function pageRoutes() {
     server.route({
         method: 'GET',
         path: '/',
@@ -62,6 +61,13 @@ async function main() {
             return new Nav().get.byParent(request.params.parent);
         }
     });
+}
+
+
+async function main() {
+    // Initialize Routes:
+
+    pageRoutes();
 
     // Wait for the server to start.
     await server.start();
